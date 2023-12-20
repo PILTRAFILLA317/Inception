@@ -1,8 +1,22 @@
-version: '3'
+version: '3.9'
 
 services:
   nginx:
+    container_name: nginx
     build:
       context: ./nginx
     ports:
       - "443:80"
+
+  wordpress:
+    build:
+      context: ./wordpress
+    ports:
+      - "8080:80"
+    volumes:
+      - ./wordpress:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
