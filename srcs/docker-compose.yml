@@ -1,0 +1,56 @@
+version: '3.1'
+
+services:
+    # nginx:
+    #     build: "requirements/nginx/"
+    #     container_name: nginx
+    #     ports:
+    #         - "443:443" #pon 443:443 par ssl
+    #     expose:
+    #         - "9000"
+    #     volumes:
+    #         # - wordpress:/var/www/html
+    #         - /Users/umartin-/data/wordpress:/var/www/html
+    #     depends_on:
+    #         - wordpress
+    #     networks:
+    #         - inception-net
+    #     # env_file:
+    #     #     - .env
+
+    # wordpress:
+    #     build: "requirements/wordpress/"
+    #     container_name: wordpress
+    #     depends_on:
+    #         - mariadb
+    #     volumes:
+    #         - /Users/umartin-/data/wordpress:/var/www/html
+    #     expose:
+    #         - "9000"
+    #     networks:
+    #         - inception-net
+
+    mariadb:
+        image: mariadb-img
+        build: "requirements/mariadb/"
+        container_name: mariadb
+        volumes:
+            # - ./requirements/mariadb/data:/var/lib/mysql
+            - /Users/umartin-/data/wordpress:/var/www/html
+            - /Users/umartin-/Desktop/data/DB:/var/lib/mysql
+            # - mariadb:/var/lib/mysql/
+        networks:
+            - inception-net
+        expose:
+            - "3306"
+        restart: always
+        env_file:
+            - .env
+
+networks:
+    inception-net:
+        driver: bridge
+
+volumes:
+  wordpress_data:
+  mariadb_data:
