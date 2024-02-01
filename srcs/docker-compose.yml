@@ -30,26 +30,41 @@ services:
     #     networks:
     #         - inception-net
 
+    # mariadb:
+    #     container_name: mariadb
+    #     image: mariadb-img
+    #     build: "requirements/mariadb/."
+    #     volumes:
+    #         # - ./requirements/mariadb/data:/var/lib/mysql
+    #         - /Users/umartin-/data/wordpress:/var/www/html
+    #         - /Users/umartin-/Desktop/data/DB:/var/lib/mysql
+    #         # - mariadb:/var/lib/mysql/
+    #     networks:
+    #         - inception-net
+    #     expose:
+    #         - "3306"
+    #     restart: always
+    #     env_file:
+    #         - .env
+
     mariadb:
         image: mariadb-img
-        build: "requirements/mariadb/"
         container_name: mariadb
-        volumes:
-            # - ./requirements/mariadb/data:/var/lib/mysql
-            - /Users/umartin-/data/wordpress:/var/www/html
-            - /Users/umartin-/Desktop/data/DB:/var/lib/mysql
-            # - mariadb:/var/lib/mysql/
-        networks:
-            - inception-net
+        build: "requirements/mariadb/"
+        # restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: tu_password_root
+            MYSQL_DATABASE: tu_nombre_de_base_de_datos
+            MYSQL_USER: tu_usuario
+            MYSQL_PASSWORD: tu_password
         expose:
             - "3306"
-        restart: always
-        env_file:
-            - .env
+        volumes:
+            - /Users/umartin-/Desktop/data/DB:/var/lib/mysql
 
-networks:
-    inception-net:
-        driver: bridge
+# networks:
+#     inception-net:
+#         driver: bridge
 
 volumes:
   wordpress_data:
