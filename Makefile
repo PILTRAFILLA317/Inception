@@ -1,5 +1,5 @@
-MARIADB_PATH=/Users/umartin-/data/DB
-WORDPRESS_PATH=/Users/umartin-/data/wordpress
+MARIADB_PATH=/Users/umartin-/Documents/data/DB
+WORDPRESS_PATH=/Users/umartin-/Documents/data/wordpress
 
 all : up
 

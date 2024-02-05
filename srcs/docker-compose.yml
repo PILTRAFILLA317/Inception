@@ -1,71 +1,66 @@
 version: '3.1'
 
 services:
-    # nginx:
-    #     build: "requirements/nginx/"
-    #     container_name: nginx
-    #     ports:
-    #         - "443:443" #pon 443:443 par ssl
-    #     expose:
-    #         - "9000"
-    #     volumes:
-    #         # - wordpress:/var/www/html
-    #         - /Users/umartin-/data/wordpress:/var/www/html
-    #     depends_on:
-    #         - wordpress
-    #     networks:
-    #         - inception-net
-    #     # env_file:
-    #     #     - .env
-
-    # wordpress:
-    #     build: "requirements/wordpress/"
-    #     container_name: wordpress
-    #     depends_on:
-    #         - mariadb
-    #     volumes:
-    #         - /Users/umartin-/data/wordpress:/var/www/html
-    #     expose:
-    #         - "9000"
-    #     networks:
-    #         - inception-net
-
-    # mariadb:
-    #     container_name: mariadb
-    #     image: mariadb-img
-    #     build: "requirements/mariadb/."
-    #     volumes:
-    #         # - ./requirements/mariadb/data:/var/lib/mysql
-    #         - /Users/umartin-/data/wordpress:/var/www/html
-    #         - /Users/umartin-/Desktop/data/DB:/var/lib/mysql
-    #         # - mariadb:/var/lib/mysql/
-    #     networks:
-    #         - inception-net
-    #     expose:
-    #         - "3306"
-    #     restart: always
-    #     env_file:
-    #         - .env
-
     mariadb:
         image: mariadb-img
         container_name: mariadb
         build: "requirements/mariadb/"
-        # restart: always
-        environment:
-            MYSQL_ROOT_PASSWORD: tu_password_root
-            MYSQL_DATABASE: tu_nombre_de_base_de_datos
-            MYSQL_USER: tu_usuario
-            MYSQL_PASSWORD: tu_password
+        env_file:
+            - .env
         expose:
             - "3306"
         volumes:
-            - /Users/umartin-/Desktop/data/DB:/var/lib/mysql
+            - mariadb:/var/lib/mysql/
+        restart: always
 
-# networks:
-#     inception-net:
-#         driver: bridge
+    wordpress:
+        image: wordpress-img
+        build: "requirements/wordpress/"
+        container_name: wordpress
+        depends_on:
+            - mariadb
+        volumes:
+            - /Users/umartin-/Documents/data/wordpress:/var/www/html
+        expose:
+            - "9000"
+        networks:
+            - inception-net
+        restart: always
+        env_file:
+            - .env
+
+    nginx:
+        build: "requirements/nginx/"
+        container_name: nginx
+        ports:
+            - "443:443"
+        expose:
+            - "9000"
+        volumes:
+            # - wordpress:/var/www/html
+            - /Users/umartin-/Documents/data/wordpress:/var/www/html
+        depends_on:
+            - wordpress
+        networks:
+            - inception-net
+        env_file:
+            - .env
+        restart: always
+
+networks:
+    inception-net:
+        driver: bridge
 
 volumes:
-  wordpress_data:
-  mariadb_data:
+    wordpress:
+        driver: local
+        driver_opts:
+            type: volume
+            device: /home/umartin-/Documents/data/wordpress
+            o: bind
+    mariadb:
+        driver: local
+        driver_opts:
+            type: none
+            device: /Users/umartin-/Documents/data/DB
+            o: bind

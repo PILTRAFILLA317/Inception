@@ -19,4 +19,3 @@ _EOF_
 fi
 killall mysqld
 mysqld_safe --bind-address=0.0.0.0
-

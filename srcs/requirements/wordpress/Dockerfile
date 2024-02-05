@@ -1,4 +1,3 @@
-# Use Debian as the base image
 FROM debian:bullseye
 
 WORKDIR /var/www/html
@@ -10,6 +9,7 @@ RUN apt-get update \
         php php-fpm php-mysql php-gd php-xml php-curl \
         curl \
         vim \
+		netcat \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
 	&& chmod +x wp-cli.phar  && mv -f wp-cli.phar /usr/local/bin/wp \
