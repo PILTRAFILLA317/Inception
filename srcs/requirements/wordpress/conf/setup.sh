@@ -10,8 +10,6 @@ while ! nc -zv mariadb 3306; do
   sleep 1
 done
 
-nc -p 3306
-
 wp core download --locale=es_ES --allow-root
 
 mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php

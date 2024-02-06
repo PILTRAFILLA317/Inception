@@ -11,6 +11,8 @@ services:
             - "3306"
         volumes:
             - mariadb:/var/lib/mysql/
+        networks:
+            - maria-net
         restart: always
 
     wordpress:
@@ -25,11 +27,13 @@ services:
             - "9000"
         networks:
             - inception-net
+            - maria-net
         restart: always
         env_file:
             - .env
 
     nginx:
+        image: nginx-img
         build: "requirements/nginx/"
         container_name: nginx
         ports:
@@ -49,6 +53,8 @@ services:
 
 networks:
     inception-net:
+        driver: bridge
+    maria-net:
         driver: bridge
 
 volumes:

@@ -9,5 +9,3 @@ COPY conf/init.sh .
 RUN chmod +x init.sh
 
 CMD ["./init.sh"]
-
-# CMD ["tail", "-f", "/dev/null"]

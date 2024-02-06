@@ -1,7 +1,7 @@
 MARIADB_PATH=/Users/umartin-/Documents/data/DB
 WORDPRESS_PATH=/Users/umartin-/Documents/data/wordpress
 
-all : up
+all : build
 
 up :
 	@docker-compose -f ./srcs/docker-compose.yml up -d
