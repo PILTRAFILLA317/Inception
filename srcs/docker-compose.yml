@@ -12,7 +12,7 @@ services:
         volumes:
             - mariadb:/var/lib/mysql/
         networks:
-            - maria-net
+            - inception-net
         restart: always
 
     wordpress:
@@ -22,12 +22,11 @@ services:
         depends_on:
             - mariadb
         volumes:
-            - /Users/umartin-/Documents/data/wordpress:/var/www/html
+            - /home/umartin-/data/wordpress:/var/www/html
         expose:
             - "9000"
         networks:
             - inception-net
-            - maria-net
         restart: always
         env_file:
             - .env
@@ -42,7 +41,7 @@ services:
             - "9000"
         volumes:
             # - wordpress:/var/www/html
-            - /Users/umartin-/Documents/data/wordpress:/var/www/html
+            - /home/umartin-/data/wordpress:/var/www/html
         depends_on:
             - wordpress
         networks:
@@ -54,19 +53,17 @@ services:
 networks:
     inception-net:
         driver: bridge
-    maria-net:
-        driver: bridge
 
 volumes:
     wordpress:
         driver: local
         driver_opts:
             type: volume
-            device: /home/umartin-/Documents/data/wordpress
+            device: /home/umartin-/data/wordpress
             o: bind
     mariadb:
         driver: local
         driver_opts:
             type: none
-            device: /Users/umartin-/Documents/data/DB
+            device: /home/umartin-/data/DB
             o: bind

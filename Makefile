@@ -1,7 +1,7 @@
-MARIADB_PATH=/Users/umartin-/Documents/data/DB
-WORDPRESS_PATH=/Users/umartin-/Documents/data/wordpress
+MARIADB_PATH=/home/umartin-/data/DB
+WORDPRESS_PATH=/home/umartin-/data/wordpress
 
-all : build
+all : up
 
 up :
 	@docker-compose -f ./srcs/docker-compose.yml up -d
@@ -15,7 +15,7 @@ start :
 	@docker-compose -f ./srcs/docker-compose.yml start
 status :
 	@docker ps
-re : down clean build
+re : down build
 
 
 exec-n :
